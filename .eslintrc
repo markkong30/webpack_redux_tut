@@ -1,6 +1,12 @@
 {
-	"extends": ["eslint:recommended", "plugin:react/recommended", "plugin:import/errors", "plugin:import/warnings"],
-	"parser": "babel-eslint",
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module",
@@ -18,7 +24,8 @@
 		"no-debugger": "off",
 		"no-console": "off",
 		"no-unused-vars": "warn",
-		"react/prop-types": "warn"
+		"react/prop-types": "warn",
+		"@typescript-eslint/ban-ts-comment": "off"
 	},
 	"settings": {
 		"react": {
