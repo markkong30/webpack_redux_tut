@@ -24,7 +24,7 @@
 		"no-debugger": "off",
 		"no-console": "off",
 		"no-unused-vars": "warn",
-		"react/prop-types": "warn",
+		"react/prop-types": "off",
 		"@typescript-eslint/ban-ts-comment": "off"
 	},
 	"settings": {

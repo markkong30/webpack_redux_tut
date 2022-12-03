@@ -1,5 +1,10 @@
 export type Course = {
+	id: string;
+	slug: string;
+	category: string;
 	title: string;
+	authorId: string;
+	author: string;
 };
 
 enum ActionTypes {
