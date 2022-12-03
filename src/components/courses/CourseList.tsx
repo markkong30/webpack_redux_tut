@@ -23,7 +23,7 @@ const CourseList: React.FC<Props> = ({ courses }) => {
 						<tr key={course.id}>
 							<td>
 								<a
-									className="btn btn-light"
+									className="btn btn-info"
 									href={'http://pluralsight.com/courses/' + course.slug}
 								>
 									Watch
