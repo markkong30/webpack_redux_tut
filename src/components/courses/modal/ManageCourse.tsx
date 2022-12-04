@@ -41,12 +41,12 @@ const ManageCourse: React.FC<Props> = ({
 	const history = useHistory();
 
 	useEffect(() => {
-		if (!courses.length) {
+		if (!courses.length && !authors.length) {
 			loadCourses();
+			loadAuthors();
 		} else {
 			setCourse({ ...props.course });
 		}
-		loadAuthors();
 	}, [props.course]);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,11 +62,16 @@ const ManageCourse: React.FC<Props> = ({
 		e.preventDefault();
 		setSaving(true);
 
-		saveCourse(course).then(() => {
-			setSaving(false);
-			toast.success('Course saved!');
-			history.push('/courses');
-		});
+		saveCourse(course)
+			.then(() => {
+				setSaving(false);
+				toast.success('Course saved!');
+				history.push('/courses');
+			})
+			.catch((err) => {
+				setSaving(false);
+				setErrors({ onSave: err.message });
+			});
 	};
 
 	if (!courses.length || !authors.length) {

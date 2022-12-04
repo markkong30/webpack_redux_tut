@@ -17,6 +17,10 @@ const updateCourseSuccess = (course: Course) => {
 	return { type: 'UPDATE_COURSE', course };
 };
 
+const deleteCourseOptimistic = (course: Course) => {
+	return { type: 'DELETE_COURSE_OPT', course };
+};
+
 export const loadCourses = (): ThunkAction<
 	void,
 	IAppState,
@@ -32,6 +36,7 @@ export const loadCourses = (): ThunkAction<
 				dispatch(loadCourseSuccess(courses));
 			})
 			.catch((err) => {
+				dispatch(endApiCall());
 				throw err;
 			})
 			.finally(() => {
@@ -56,10 +61,22 @@ export const saveCourse = (
 				}
 			})
 			.catch((err) => {
+				dispatch(endApiCall());
 				throw err;
 			})
 			.finally(() => {
 				dispatch(endApiCall());
 			});
+	};
+};
+
+export const deleteCourse = (
+	course: Course
+): ThunkAction<void, IAppState, unknown, AnyAction> => {
+	return (dispatch) => {
+		dispatch(deleteCourseOptimistic(course));
+		return courseApi.deleteCourse(course.id).catch((err) => {
+			throw err;
+		});
 	};
 };

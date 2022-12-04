@@ -5,9 +5,10 @@ import styles from './styles.module.scss';
 
 type Props = {
 	courses: Course[];
+	handleDelete: (course: Course) => void;
 };
 
-const CourseList: React.FC<Props> = ({ courses }) => {
+const CourseList: React.FC<Props> = ({ courses, handleDelete }) => {
 	return (
 		<table className="table">
 			<thead>
@@ -16,6 +17,7 @@ const CourseList: React.FC<Props> = ({ courses }) => {
 					<th>Title</th>
 					<th>Author</th>
 					<th>Category</th>
+					<th />
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +37,14 @@ const CourseList: React.FC<Props> = ({ courses }) => {
 							</td>
 							<td>{course.author}</td>
 							<td>{course.category}</td>
+							<td>
+								<button
+									className="btn btn-outline-danger"
+									onClick={() => handleDelete(course)}
+								>
+									Delete
+								</button>
+							</td>
 						</tr>
 					);
 				})}

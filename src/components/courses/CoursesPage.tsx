@@ -8,6 +8,7 @@ import * as authorActions from '../../redux/actions/authorActions';
 import CourseList from './CourseList';
 import Spinner from '../../common/Spinner';
 import { Author } from '../../redux/types/author.type';
+import { toast } from 'react-toastify';
 
 type Props = {
 	loadCourses: () => Promise<void>;
@@ -15,6 +16,7 @@ type Props = {
 	authors: Author[];
 	loadAuthors: () => Promise<void>;
 	loading: boolean;
+	deleteCourse: (course: Course) => Promise<void>;
 };
 type State = {
 	course: Course | null;
@@ -31,15 +33,19 @@ class CoursesPage extends React.Component<Props, State> {
 
 	componentDidMount(): void {
 		const { courses, authors, loadCourses, loadAuthors } = this.props;
-
-		if (!courses.length) {
-			loadCourses();
-		}
+		loadCourses();
 
 		if (!authors.length) {
 			loadAuthors();
 		}
 	}
+
+	handleDelete = (course: Course) => {
+		toast('Course deleted!');
+		this.props.deleteCourse(course).catch((err) => {
+			toast.error(`Delete failed, ${err.message}`);
+		});
+	};
 
 	render() {
 		return (
@@ -57,7 +63,10 @@ class CoursesPage extends React.Component<Props, State> {
 								Add Course
 							</button>
 						</Link>
-						<CourseList courses={this.props.courses} />
+						<CourseList
+							courses={this.props.courses}
+							handleDelete={this.handleDelete}
+						/>
 					</>
 				)}
 			</>
@@ -81,7 +90,8 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = {
 	loadCourses: courseActions.loadCourses,
-	loadAuthors: authorActions.loadAuthors
+	loadAuthors: authorActions.loadAuthors,
+	deleteCourse: courseActions.deleteCourse
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
