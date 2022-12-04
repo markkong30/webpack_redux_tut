@@ -4,12 +4,16 @@ import type { AnyAction } from 'redux';
 import type { ThunkAction } from 'redux-thunk';
 import type { IAppState } from '../../redux/types/store.type';
 
-export const createCourse = (course: Course) => {
+const loadCourseSuccess = (courses: Course[]) => {
+	return { type: 'LOAD_COURSES', courses };
+};
+
+const createCourseSuccess = (course: Course) => {
 	return { type: 'CREATE_COURSE', course };
 };
 
-const loadCourseSuccess = (courses: Course[]) => {
-	return { type: 'LOAD_COURSES', courses };
+const updateCourseSuccess = (course: Course) => {
+	return { type: 'UPDATE_COURSE', course };
 };
 
 export const loadCourses = (): ThunkAction<
@@ -23,6 +27,24 @@ export const loadCourses = (): ThunkAction<
 			.getCourses()
 			.then((courses) => {
 				dispatch(loadCourseSuccess(courses));
+			})
+			.catch((err) => {
+				throw err;
+			});
+};
+
+export const saveCourse = (
+	course: Course
+): ThunkAction<void, IAppState, unknown, AnyAction> => {
+	return (dispatch) =>
+		courseApi
+			.saveCourse(course)
+			.then((course) => {
+				if (course.id) {
+					dispatch(updateCourseSuccess(course));
+				} else {
+					dispatch(createCourseSuccess(course));
+				}
 			})
 			.catch((err) => {
 				throw err;

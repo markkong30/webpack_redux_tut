@@ -9,6 +9,9 @@ interface IActionA {
 	authors: Author[];
 }
 
-export type Author = any;
+export type Author = {
+	id: string;
+	name: string;
+};
 
 export type IAction = IActionA;

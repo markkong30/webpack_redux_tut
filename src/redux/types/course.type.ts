@@ -9,7 +9,8 @@ export type Course = {
 
 enum ActionTypes {
 	A = 'CREATE_COURSE',
-	B = 'LOAD_COURSES'
+	B = 'LOAD_COURSES',
+	C = 'UPDATE_COURSE'
 }
 
 interface IActionA {
@@ -21,9 +22,14 @@ interface IActionB {
 	type: ActionTypes.B;
 	courses: Course[];
 }
+
+interface IActionC {
+	type: ActionTypes.C;
+	course: Course;
+}
 export interface CourseDispatch {
-	type: ActionTypes.A | ActionTypes.B;
+	type: ActionTypes.A | ActionTypes.B | ActionTypes.C;
 	course: Course;
 }
 
-export type IAction = IActionA | IActionB;
+export type IAction = IActionA | IActionB | IActionC;

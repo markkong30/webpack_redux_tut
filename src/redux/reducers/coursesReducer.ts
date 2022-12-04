@@ -6,6 +6,10 @@ export const coursesReducer = (state: Course[] = [], action: IAction) => {
 			return action.courses;
 		case 'CREATE_COURSE':
 			return [...state, action.course];
+		case 'UPDATE_COURSE':
+			return state.map((course) =>
+				course.id === action.course.id ? action.course : course
+			);
 		default:
 			return state;
 	}
