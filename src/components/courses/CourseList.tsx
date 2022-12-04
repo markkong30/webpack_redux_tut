@@ -1,6 +1,7 @@
 import React from 'react';
 import { Course } from '../../redux/types/course.type';
 import { Link } from 'react-router-dom';
+import styles from './styles.module.scss';
 
 type Props = {
 	courses: Course[];
@@ -20,7 +21,7 @@ const CourseList: React.FC<Props> = ({ courses }) => {
 			<tbody>
 				{courses.map((course) => {
 					return (
-						<tr key={course.id}>
+						<tr key={course.id} className={styles.row}>
 							<td>
 								<a
 									className="btn btn-info"

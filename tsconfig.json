@@ -10,5 +10,6 @@
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"typeRoots": ["./node_modules/@types", "./src/types"]
-	}
+	},
+	"include": ["./declaration.d.ts"]
 }
