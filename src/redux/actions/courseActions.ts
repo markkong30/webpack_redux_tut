@@ -3,6 +3,7 @@ import * as courseApi from '../../api/courseApi';
 import type { AnyAction } from 'redux';
 import type { ThunkAction } from 'redux-thunk';
 import type { IAppState } from '../../redux/types/store.type';
+import { beginApiCall, endApiCall } from './apiStatusActions';
 
 const loadCourseSuccess = (courses: Course[]) => {
 	return { type: 'LOAD_COURSES', courses };
@@ -22,22 +23,30 @@ export const loadCourses = (): ThunkAction<
 	unknown,
 	AnyAction
 > => {
-	return (dispatch) =>
-		courseApi
+	return (dispatch) => {
+		dispatch(beginApiCall());
+
+		return courseApi
 			.getCourses()
 			.then((courses) => {
 				dispatch(loadCourseSuccess(courses));
 			})
 			.catch((err) => {
 				throw err;
+			})
+			.finally(() => {
+				dispatch(endApiCall());
 			});
+	};
 };
 
 export const saveCourse = (
 	course: Course
 ): ThunkAction<void, IAppState, unknown, AnyAction> => {
-	return (dispatch) =>
-		courseApi
+	return (dispatch) => {
+		dispatch(beginApiCall());
+
+		return courseApi
 			.saveCourse(course)
 			.then((course) => {
 				if (course.id) {
@@ -48,5 +57,9 @@ export const saveCourse = (
 			})
 			.catch((err) => {
 				throw err;
+			})
+			.finally(() => {
+				dispatch(endApiCall());
 			});
+	};
 };

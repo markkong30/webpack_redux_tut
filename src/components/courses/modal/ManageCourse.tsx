@@ -8,6 +8,8 @@ import CourseForm from './CourseForm';
 import { useHistory } from 'react-router-dom';
 import { Author } from '../../../redux/types/author.type';
 import type { RouteComponentProps } from 'react-router-dom';
+import Spinner from '../../../common/Spinner';
+import { toast } from 'react-toastify';
 
 type Props = {
 	loadCourses: () => void;
@@ -35,8 +37,9 @@ const ManageCourse: React.FC<Props> = ({
 }) => {
 	const [course, setCourse] = useState<Course>({ ...props.course });
 	const [errors, setErrors] = useState({});
+	const [saving, setSaving] = useState<boolean>(false);
 	const history = useHistory();
-	// const {slug}: any = useParams();
+
 	useEffect(() => {
 		if (!courses.length) {
 			loadCourses();
@@ -57,10 +60,18 @@ const ManageCourse: React.FC<Props> = ({
 
 	const onSave = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setSaving(true);
+
 		saveCourse(course).then(() => {
+			setSaving(false);
+			toast.success('Course saved!');
 			history.push('/courses');
 		});
 	};
+
+	if (!courses.length || !authors.length) {
+		return <Spinner />;
+	}
 
 	return (
 		<CourseForm
@@ -69,7 +80,7 @@ const ManageCourse: React.FC<Props> = ({
 			errors={errors}
 			onChange={onChange}
 			onSave={onSave}
-			saving={false}
+			saving={saving}
 		/>
 	);
 };

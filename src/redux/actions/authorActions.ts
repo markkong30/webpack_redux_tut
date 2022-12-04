@@ -2,6 +2,7 @@ import * as authorApi from '../../api/authorApi';
 import type { AnyAction } from 'redux';
 import type { ThunkAction } from 'redux-thunk';
 import type { IAppState } from '../../redux/types/store.type';
+import { beginApiCall, endApiCall } from './apiStatusActions';
 
 const loadAuthorsSuccess = (authors: any) => {
 	return { type: 'LOAD_AUTHORS', authors };
@@ -13,13 +14,18 @@ export const loadAuthors = (): ThunkAction<
 	unknown,
 	AnyAction
 > => {
-	return (dispatch) =>
-		authorApi
+	return (dispatch) => {
+		dispatch(beginApiCall());
+		return authorApi
 			.getAuthors()
 			.then((authors) => {
 				dispatch(loadAuthorsSuccess(authors));
 			})
 			.catch((err) => {
 				throw err;
+			})
+			.finally(() => {
+				dispatch(endApiCall());
 			});
+	};
 };

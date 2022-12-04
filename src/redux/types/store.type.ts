@@ -8,4 +8,5 @@ export interface IRootState {
 export type IAppState = {
 	courses: Course[];
 	authors: Author[];
+	apiCallsInProgress: number;
 };

@@ -39,6 +39,7 @@ const CourseForm: React.FC<Props> = ({
 				value={course.title}
 				onChange={onChange}
 				error={errors.title}
+				placeholder=""
 			/>
 
 			<SelectInput
@@ -60,6 +61,7 @@ const CourseForm: React.FC<Props> = ({
 				value={course.category}
 				onChange={onChange}
 				error={errors.category}
+				placeholder=""
 			/>
 
 			<button type="submit" disabled={saving} className="btn btn-primary">

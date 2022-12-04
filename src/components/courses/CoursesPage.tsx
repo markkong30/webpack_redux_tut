@@ -6,11 +6,15 @@ import type { Course } from '../../redux/types/course.type';
 import * as courseActions from '../../redux/actions/courseActions';
 import * as authorActions from '../../redux/actions/authorActions';
 import CourseList from './CourseList';
+import Spinner from '../../common/Spinner';
+import { Author } from '../../redux/types/author.type';
 
 type Props = {
-	loadCourses: () => void;
+	loadCourses: () => Promise<void>;
 	courses: Course[];
-	loadAuthors: () => void;
+	authors: Author[];
+	loadAuthors: () => Promise<void>;
+	loading: boolean;
 };
 type State = {
 	course: Course | null;
@@ -26,24 +30,36 @@ class CoursesPage extends React.Component<Props, State> {
 	}
 
 	componentDidMount(): void {
-		this.props.loadCourses();
-		this.props.loadAuthors();
+		const { courses, authors, loadCourses, loadAuthors } = this.props;
+
+		if (!courses.length) {
+			loadCourses();
+		}
+
+		if (!authors.length) {
+			loadAuthors();
+		}
 	}
 
 	render() {
 		return (
 			<>
 				<h2>Courses</h2>
-				<Link to="/course">
-					<button
-						style={{ marginBottom: 20 }}
-						className="btn btn-primary add-course mt-3"
-					>
-						Add Course
-					</button>
-				</Link>
-
-				<CourseList courses={this.props.courses} />
+				{this.props.loading ? (
+					<Spinner />
+				) : (
+					<>
+						<Link to="/course">
+							<button
+								style={{ marginBottom: 20 }}
+								className="btn btn-primary add-course mt-3"
+							>
+								Add Course
+							</button>
+						</Link>
+						<CourseList courses={this.props.courses} />
+					</>
+				)}
 			</>
 		);
 	}
@@ -58,7 +74,8 @@ const mapStateToProps = (state: IAppState) => {
 						.name
 			  }))
 			: [],
-		authors: state.authors
+		authors: state.authors,
+		loading: state.apiCallsInProgress > 0
 	};
 };
 

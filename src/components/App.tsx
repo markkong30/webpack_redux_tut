@@ -6,6 +6,8 @@ import Header from '../common/Header';
 import PageNotFound from './PageNotFound';
 import CoursesPage from './courses/CoursesPage';
 import ManageCourse from './courses/modal/ManageCourse';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC = () => {
 	return (
@@ -19,6 +21,7 @@ const App: React.FC = () => {
 				<Route path="/course/:slug" component={ManageCourse} />
 				<Route component={PageNotFound} />
 			</Switch>
+			<ToastContainer autoClose={3000} theme="light" />
 		</div>
 	);
 };
