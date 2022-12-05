@@ -27,6 +27,7 @@
 		"@types/react-router-dom": "^5.3.3",
 		"@typescript-eslint/eslint-plugin": "^5.44.0",
 		"bootstrap": "5.0.2",
+		"eslint-plugin-jest": "^27.1.6",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"immer": "9.0.5",
 		"prop-types": "15.7.2",

@@ -40,7 +40,7 @@ module.exports = {
 
 	// Plugins
 	// =================================
-	// plugins: ['jsx-a11y'],
+	plugins: ['jest'],
 
 	// Extend Other Configs
 	// =================================
@@ -134,6 +134,12 @@ module.exports = {
 					}
 				]
 			}
+		},
+		{
+			files: ['**/*.test.js'],
+			env: { 'jest/globals': true },
+			plugins: ['jest'],
+			extends: ['plugin:jest/recommended']
 		}
 	]
 };
