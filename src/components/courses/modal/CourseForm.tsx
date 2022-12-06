@@ -26,6 +26,7 @@ const CourseForm: React.FC<Props> = ({
 			onSubmit={onSave}
 			className="d-flex flex-column gap-3"
 			style={{ maxWidth: 800 }}
+			data-testid="save-form"
 		>
 			<h2>{course.id ? 'Edit' : 'Add'} Course</h2>
 			{errors.onSave && (
