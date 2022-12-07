@@ -9,7 +9,7 @@ const loadCourseSuccess = (courses: Course[]) => {
 	return { type: 'LOAD_COURSES', courses };
 };
 
-const createCourseSuccess = (course: Course) => {
+export const createCourseSuccess = (course: Course) => {
 	return { type: 'CREATE_COURSE', course };
 };
 

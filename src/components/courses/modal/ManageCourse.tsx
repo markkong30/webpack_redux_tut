@@ -27,7 +27,7 @@ interface MatchProps extends RouteComponentProps<MatchParams> {
 	slug: string;
 }
 
-const ManageCourse: React.FC<Props> = ({
+export const ManageCourse: React.FC<Props> = ({
 	loadCourses,
 	courses,
 	authors,
@@ -35,9 +35,9 @@ const ManageCourse: React.FC<Props> = ({
 	saveCourse,
 	...props
 }) => {
-	const [course, setCourse] = useState<Course>({ ...props.course });
-	const [errors, setErrors] = useState({});
-	const [saving, setSaving] = useState<boolean>(false);
+	const [course, setCourse] = React.useState<Course>({ ...props.course });
+	const [errors, setErrors] = React.useState({});
+	const [saving, setSaving] = React.useState<boolean>(false);
 	const history = useHistory();
 
 	useEffect(() => {
@@ -69,6 +69,7 @@ const ManageCourse: React.FC<Props> = ({
 				history.push('/courses');
 			})
 			.catch((err) => {
+				console.log(err);
 				setSaving(false);
 				setErrors({ onSave: err.message });
 			});
