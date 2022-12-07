@@ -105,6 +105,6 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss']
+		extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss', '.css']
 	}
 };
